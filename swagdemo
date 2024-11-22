@@ -1,0 +1,61 @@
+describe('Verify Login page', () => {
+
+  it('Verify the logo', () => {
+
+    cy.visit('https://www.saucedemo.com/v1/index.html')
+
+    cy.get('div[class="login_logo"]').should("be.visible")
+
+  })
+
+  it('Verify login with valid credentials ', () => {
+    cy.visit('https://www.saucedemo.com/v1/index.html')
+
+    cy.get('input[name="user-name"]').type("standard_user")
+
+    cy.get('input[name="password"]').type("secret_sauce")
+
+    cy.get('input[id="login-button"]').click()
+
+    //cy.contains('Change Password').should("be.visible")
+
+    cy.url().should("eq", "https://www.saucedemo.com/v1/inventory.html")
+  })
+
+
+  it('Verify Login with Valid Username and Invalid password', () => {
+    cy.visit('https://www.saucedemo.com/v1/index.html')
+
+    cy.get('input[name="user-name"]').type("standard_user")
+
+    cy.get('input[name="password"]').type("tyhrguh")
+
+    cy.get('input[type="submit"]').click()
+
+    cy.contains('Epic sadface: Username and password do not match any user in this service').should("be.visible")
+  })
+  it('Verify Login with InValid Username and valid password', () => {
+    cy.visit('https://www.saucedemo.com/v1/index.html')
+
+    cy.get('input[name="user-name"]').type("ghuief")
+
+    cy.get('input[name="password"]').type("secret_sauce")
+
+    cy.get('input[type="submit"]').click()
+
+    cy.contains('Epic sadface: Username and password do not match any user in this service').should("be.visible")
+  })
+
+  it('Verify Login with InValid Username and Invalid password', () => {
+    cy.visit('https://www.saucedemo.com/v1/index.html')
+
+    cy.get('input[name="user-name"]').type("kauief")
+
+    cy.get('input[name="password"]').type("fdjgh")
+
+    cy.get('input[type="submit"]').click()
+
+    cy.contains('Epic sadface: Username and password do not match any user in this service').should("be.visible")
+  })
+
+ })
